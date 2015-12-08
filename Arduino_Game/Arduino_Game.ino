@@ -42,7 +42,6 @@ int advance(int playerChoice) {
   playerChoice = 0;
 }
 
-
 void loop() {
   while (digitalRead(buttonPins[0]) == HIGH || digitalRead(buttonPins[1]) == HIGH || digitalRead(buttonPins[2]) == HIGH || digitalRead(buttonPins[3]) == HIGH) {
 
