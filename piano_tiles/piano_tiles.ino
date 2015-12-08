@@ -83,4 +83,6 @@ void loop() {
   } else {
     Led = 12;
   }
+  binarysignal(2);
+  digitalWrite(5, HIGH);
 }
