@@ -11,6 +11,16 @@ const int button4   = 12;
 long randnum;
 int Led;
 
+void setup() {
+  Serial.begin(9600);
+  for (int x = 3; x < 9; x++) {
+    pinMode(x, OUTPUT);
+  }
+  for (int x = 9; x < 13; x++) {
+    pinMode(x, INPUT);
+  }
+  randomSeed(analogRead(0));
+}
 
 void binarysignal (int lednum) {
   int A, B, C, x = 0 ;
@@ -27,54 +37,36 @@ void binarysignal (int lednum) {
   if (x = 0) {
     if (A == 0) {
       digitalWrite(channelA1, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelA1, HIGH);
     }
     if (B == 0) {
       digitalWrite(channelB1, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelB1, HIGH);
     }
     if (C == 0) {
       digitalWrite(channelC1, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelC1, HIGH);
     }
-  }
-  else {
+  } else {
     if (A == 0) {
       digitalWrite(channelA2, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelA2, HIGH);
     }
     if (B == 0) {
       digitalWrite(channelB2, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelB2, HIGH);
     }
     if (C == 0) {
       digitalWrite(channelC2, LOW);
-    }
-    else {
+    } else {
       digitalWrite(channelC2, HIGH);
     }
   }
-}
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  for (int x = 3; x < 9; x++) {
-    pinMode(x, OUTPUT);
-  }
-  for (int x = 9; x < 13; x++) {
-    pinMode(x, INPUT);
-  }
-  randomSeed(analogRead(0));
 }
 
 void loop() {
@@ -84,14 +76,11 @@ void loop() {
 
   if (randnum = 0) {
     Led = 0;
-  }
-  else if (randnum = 1) {
+  } else if (randnum = 1) {
     Led = 4;
-  }
-  else if (randnum = 2) {
+  } else if (randnum = 2) {
     Led = 8;
-  }
-  else {
+  } else {
     Led = 12;
   }
 }
