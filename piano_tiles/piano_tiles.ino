@@ -19,20 +19,50 @@ int Led;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
+  for (int x = 0; x < 10; x++){
+    pinMode(x,OUTPUT);
+  }
 }
 void loop() {
   for(int Led = 0; Led < 8; Led++){
   delay(500);
-  binarysignal(Led);
+  binarysignal1(Led);
+  binarysignal2(Led);
   }
 }
 
-void binarysignal (int lednum) {
-  int A, B, C = 0 ;
+void binarysignal1 (int lednum) {
+  int A, B, C;
+
+  A = lednum % 2;
+  lednum = lednum / 2;
+  B = lednum % 2;
+  lednum = lednum / 2;
+  C = lednum % 2;
+
+  digitalWrite (enable2, LOW);
+  if (A == 0) {
+    digitalWrite(channelA2, LOW);
+  }
+  else {
+    digitalWrite(channelA2, HIGH);
+  }
+  if (B == 0) {
+    digitalWrite(channelB2, LOW);
+  }
+  else {
+    digitalWrite(channelB2, HIGH);
+  }
+  if (C == 0) {
+    digitalWrite(channelC2, LOW);
+  }
+  else {
+    digitalWrite(channelC2, HIGH);
+  } 
+}
+
+void binarysignal2 (int lednum) {
+  int A, B, C;
 
   A = lednum % 2;
   lednum = lednum / 2;
@@ -58,10 +88,5 @@ void binarysignal (int lednum) {
   }
   else {
     digitalWrite(channelC1, HIGH);
-  }
-
-  Serial.print(A);
-  Serial.print(B);
-  Serial.print(C) ;
+  } 
 }
-
