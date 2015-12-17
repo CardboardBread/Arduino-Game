@@ -19,33 +19,61 @@ int Led = 0;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  for (int x = 0; x < 10; x++){
-    pinMode(x,OUTPUT);
+  for (int x = 0; x < 10; x++) {
+    pinMode(x, OUTPUT);
   }
 }
 void loop() {
-  for(int Led = 0; Led < 4; Led++){
-    for (int time = 0; time < 50; time++){
-      delay(5);
-      binarysignal2(Led);
-      binarysignal1(Led+1);
-      delay(5);
-      binarysignal2(Led + 4+2);
-      binarysignal1(Led + 4+3);
+  for (int Led = 0; Led < 4; Led++) {
+    for (int time = 0; time < 3; time++) {
+      delay(1000);
+      binarysignal1(Led);
+      delay(1000);
+      binarysignal2(Led + 1);
+      delay(1000);
+      binarysignal1(Led + 4 + 2);
+      delay(1000);
+
+      binarysignal2(Led + 4 + 3);
+
     }
   }
 }
+void tiledropper(int col) {
+  //for (int Led = 0; Led < 4; Led++) {
+  //delay(1000);
+  if (col == 1) {
+    binarysignal1(Led);
+  }
+  else if (col == 2) {
+    binarysignal2(Led);
 
-void binarysignal1 (int lednum) {
+  }
+  else if (col == 3) {
+    binarysignal1(Led + 4);
+
+  }
+  else {
+    binarysignal2(Led + 4);
+
+  }
+
+  //}
+}
+void binarysignal2 (int lednum) {
   int A, B, C;
-
+  if (lednum >= 8) {
+    digitalWrite (enable2, HIGH);
+  }
+  else {
+    digitalWrite (enable2, LOW);
+  }
   A = lednum % 2;
   lednum = lednum / 2;
   B = lednum % 2;
   lednum = lednum / 2;
   C = lednum % 2;
 
-  digitalWrite (enable2, LOW);
   if (A == 0) {
     digitalWrite(channelA2, LOW);
   }
@@ -63,19 +91,23 @@ void binarysignal1 (int lednum) {
   }
   else {
     digitalWrite(channelC2, HIGH);
-  } 
+  }
 }
 
-void binarysignal2 (int lednum) {
+void binarysignal1 (int lednum) {
   int A, B, C;
-
+  if (lednum >= 8) {
+    digitalWrite (enable1, HIGH);
+  }
+  else {
+    digitalWrite (enable1, LOW);
+  }
   A = lednum % 2;
   lednum = lednum / 2;
   B = lednum % 2;
   lednum = lednum / 2;
   C = lednum % 2;
 
-  digitalWrite (enable1, LOW);
   if (A == 0) {
     digitalWrite(channelA1, LOW);
   }
@@ -93,5 +125,5 @@ void binarysignal2 (int lednum) {
   }
   else {
     digitalWrite(channelC1, HIGH);
-  } 
+  }
 }
