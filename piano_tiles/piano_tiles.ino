@@ -24,42 +24,61 @@ void setup() {
   }
 }
 void loop() {
-  for (int Led = 0; Led < 4; Led++) {
-    for (int time = 0; time < 3; time++) {
-      delay(1000);
-      binarysignal1(Led);
-      delay(1000);
-      binarysignal2(Led + 1);
-      delay(1000);
-      binarysignal1(Led + 4 + 2);
-      delay(1000);
+  /*for (int Led = 0; Led < 4; Led++) {
+    for (int time = 0; time < 100; time++) {
+      delay(1);
+      LED_ON(3, Led);
+        delay(1);
+      LED_ON(4, Led);
+        delay(1);
+      LED_ON(3, Led + 2);
+        delay(1);
+      LED_ON(4, Led + 2);
+      }
+    }*/
+   tiledroper(2,1,4,4); 
+  }
+void tiledroper(int coltile1,int coltile2,int coltile3,int coltile4){
+    for (int time = 0; time < 100; time++) {
+      delay(1);
+      LED_ON(coltile1, 0);
+        delay(1);
+      LED_ON(coltile2, 1);
+        delay(1);
+      LED_ON(coltile3, 2);
+        delay(1);
+      LED_ON(coltile4, 3);
+      }
+}
 
-      binarysignal2(Led + 4 + 3);
+  
+void LED_ON(int col, int row) {
+    //for (int Led = 0; Led < 4; Led++) {
+    //delay(1000);
+    if (row > 3){
+      row = 8;
+    }
+    else {
+    row = row;
+    }
+    if (col == 1) {
+      binarysignal1(row);
+    }
+    else if (col == 2) {
+      binarysignal2(row);
 
     }
-  }
-}
-void tiledropper(int col) {
-  //for (int Led = 0; Led < 4; Led++) {
-  //delay(1000);
-  if (col == 1) {
-    binarysignal1(Led);
-  }
-  else if (col == 2) {
-    binarysignal2(Led);
+    else if (col == 3) {
+      binarysignal1(row + 4);
 
-  }
-  else if (col == 3) {
-    binarysignal1(Led + 4);
+    }
+    else {
+      binarysignal2(row + 4);
 
-  }
-  else {
-    binarysignal2(Led + 4);
+    }
 
+    //}
   }
-
-  //}
-}
 void binarysignal2 (int lednum) {
   int A, B, C;
   if (lednum >= 8) {
@@ -127,3 +146,4 @@ void binarysignal1 (int lednum) {
     digitalWrite(channelC1, HIGH);
   }
 }
+
