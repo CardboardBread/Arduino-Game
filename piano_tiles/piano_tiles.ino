@@ -12,35 +12,87 @@ const int button1   = 10;
 const int button2   = 11;
 const int button3   = 12;
 const int button4   = 13;
-int Led;
+int Led = 0;
 
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  for (int x = 0; x < 10; x++){
-    pinMode(x,OUTPUT);
+  for (int x = 0; x < 10; x++) {
+    pinMode(x, OUTPUT);
   }
 }
 void loop() {
-  for(int Led = 0; Led < 8; Led++){
-  delay(500);
-  binarysignal1(Led);
-  binarysignal2(Led);
+  /*for (int Led = 0; Led < 4; Led++) {
+    for (int time = 0; time < 100; time++) {
+      delay(1);
+      LED_ON(3, Led);
+        delay(1);
+      LED_ON(4, Led);
+        delay(1);
+      LED_ON(3, Led + 2);
+        delay(1);
+      LED_ON(4, Led + 2);
+      }
+    }*/
+   tiledroper(2,1,4,4); 
   }
+void tiledroper(int coltile1,int coltile2,int coltile3,int coltile4){
+    for (int time = 0; time < 100; time++) {
+      delay(1);
+      LED_ON(coltile1, 0);
+        delay(1);
+      LED_ON(coltile2, 1);
+        delay(1);
+      LED_ON(coltile3, 2);
+        delay(1);
+      LED_ON(coltile4, 3);
+      }
 }
 
-void binarysignal1 (int lednum) {
-  int A, B, C;
+  
+void LED_ON(int col, int row) {
+    //for (int Led = 0; Led < 4; Led++) {
+    //delay(1000);
+    if (row > 3){
+      row = 8;
+    }
+    else {
+    row = row;
+    }
+    if (col == 1) {
+      binarysignal1(row);
+    }
+    else if (col == 2) {
+      binarysignal2(row);
 
+    }
+    else if (col == 3) {
+      binarysignal1(row + 4);
+
+    }
+    else {
+      binarysignal2(row + 4);
+
+    }
+
+    //}
+  }
+void binarysignal2 (int lednum) {
+  int A, B, C;
+  if (lednum >= 8) {
+    digitalWrite (enable2, HIGH);
+  }
+  else {
+    digitalWrite (enable2, LOW);
+  }
   A = lednum % 2;
   lednum = lednum / 2;
   B = lednum % 2;
   lednum = lednum / 2;
   C = lednum % 2;
 
-  digitalWrite (enable2, LOW);
   if (A == 0) {
     digitalWrite(channelA2, LOW);
   }
@@ -58,19 +110,23 @@ void binarysignal1 (int lednum) {
   }
   else {
     digitalWrite(channelC2, HIGH);
-  } 
+  }
 }
 
-void binarysignal2 (int lednum) {
+void binarysignal1 (int lednum) {
   int A, B, C;
-
+  if (lednum >= 8) {
+    digitalWrite (enable1, HIGH);
+  }
+  else {
+    digitalWrite (enable1, LOW);
+  }
   A = lednum % 2;
   lednum = lednum / 2;
   B = lednum % 2;
   lednum = lednum / 2;
   C = lednum % 2;
 
-  digitalWrite (enable1, LOW);
   if (A == 0) {
     digitalWrite(channelA1, LOW);
   }
@@ -88,5 +144,6 @@ void binarysignal2 (int lednum) {
   }
   else {
     digitalWrite(channelC1, HIGH);
-  } 
+  }
 }
+
