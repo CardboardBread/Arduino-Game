@@ -12,7 +12,7 @@ const int button1   = 10;
 const int button2   = 11;
 const int button3   = 12;
 const int button4   = 13;
-int Led = 0;
+int Led[4] = {2,1,3,4};
 
 
 
@@ -24,21 +24,22 @@ void setup() {
   }
 }
 void loop() {
-  /*for (int Led = 0; Led < 4; Led++) {
-    for (int time = 0; time < 100; time++) {
-      delay(1);
-      LED_ON(3, Led);
-        delay(1);
-      LED_ON(4, Led);
-        delay(1);
-      LED_ON(3, Led + 2);
-        delay(1);
-      LED_ON(4, Led + 2);
-      }
-    }*/
-   tiledroper(2,1,4,4); 
+  
+  tiler(Led[0],Led[1],Led[2],Led[3]); 
+  
+  shifter(Led);
   }
-void tiledroper(int coltile1,int coltile2,int coltile3,int coltile4){
+
+  
+void shifter(int tiles[4]){
+  int a = tiles[3];
+  tiles[3] = tiles[2];
+  tiles[2] = tiles[1];
+  tiles[1] = tiles[0];
+  tiles[0] = a;
+}
+
+void tiler(int coltile1,int coltile2,int coltile3,int coltile4){
     for (int time = 0; time < 100; time++) {
       delay(1);
       LED_ON(coltile1, 0);
