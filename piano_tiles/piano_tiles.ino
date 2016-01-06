@@ -4,6 +4,7 @@
 #include "LEDs.h"
 #include "GAMES.h"
 #include "SCORE.h"
+#include "TIME.h"
 
 //the goody two shoe program
 const int channelA1 	= 2;
@@ -19,12 +20,14 @@ const int enable2   	= 9;
 int buttons[4]      	= {A1, A2, 12, 13};
 int Led, a, x        	= 0;
 int tilecolumn[4]    	= {1,2, 3, 4};
-unsigned long counter 	= 0;
+long unsigned limit = 60000;
+unsigned long time;
 
 LEDs ledarray 			= LEDs();
 Buttonscls pushbutton	= Buttonscls();
 GAMES pianotiles 		= GAMES();
 SCORE score				= SCORE();
+TIME timeleft       = TIME();
 
 
 void setup() {
@@ -46,7 +49,6 @@ void setup() {
 
 
 void loop() {
-	counter = counter + 1;
 	
 	if (x >= 4) {
 		x = 0;
@@ -63,7 +65,7 @@ void loop() {
 	
     x++;
 	
-    if (counter > 1200) {
+    if (time > limit) {
       digitalWrite(enable1, HIGH);
       digitalWrite(enable2, HIGH);
       exit(0);
