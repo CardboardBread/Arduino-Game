@@ -36,10 +36,10 @@ void LEDs::binarysignal1 (int lednum) {
     digitalWrite(channelC1, HIGH);
   }
   //Signal checker/debuger
-  //Serial.println(A) ;
-  //Serial.println(B) ;
-  //Serial.println(C) ;
-  //Serial.println("----") ;
+  Serial.println(A) ;
+  Serial.println(B) ;
+  Serial.println(C) ;
+  Serial.println("----") ;
 
 }
 /////////////////////////////////////////////////////////////////////////////////
