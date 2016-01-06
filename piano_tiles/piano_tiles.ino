@@ -3,6 +3,7 @@
 #include "Buttonscls.h"
 #include "LEDs.h"
 #include "GAMES.h"
+#include "SCORE.h"
 
 //the goody two shoe program
 const int channelA1 = 2;
@@ -18,10 +19,12 @@ const int enable2   = 9;
 int buttons[4]      = {A1, A2, 12, 13};
 int Led, a, x       = 0;
 int tilecolumn[4]   = {1,2, 3, 4};
+unsigned long counter = 0;
 
 LEDs ledarray            = LEDs();
 Buttonscls pushbutton    = Buttonscls();
 GAMES pianotiles         = GAMES();
+SCORE score				       = SCORE();
 
 
 
@@ -38,11 +41,15 @@ void setup() {
   }
   randomSeed(analogRead(A5));
 
+  pinMode(A3, OUTPUT);
+  pinMode(A4, OUTPUT);
+  pinMode(A5, OUTPUT);
 
 }
 
 
 void loop() {
+  counter = counter + 1;
   if (x >= 4) {
     x = 0;
     }
@@ -52,9 +59,15 @@ void loop() {
     if (a + 1 == tilecolumn[3]) {
     Serial.println(a);
     shifter(tilecolumn);
+	  score.printScore();
     }
     x++;
-    
+    if (counter > 1200)
+    {
+      digitalWrite(enable1, HIGH);
+      digitalWrite(enable2, HIGH);
+      exit(0);
+    }
 }
 
 
