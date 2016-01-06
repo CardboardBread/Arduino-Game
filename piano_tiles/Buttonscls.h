@@ -3,7 +3,8 @@
 #include "Arduino.h"
 
 
-class Buttonscls {
+class Buttonscls
+{
   public:
     Buttonscls();
 
