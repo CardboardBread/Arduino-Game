@@ -3,8 +3,7 @@
 #include "Arduino.h"
 
 
-class GAMES
-{
+class GAMES {
   public:
     GAMES();
 

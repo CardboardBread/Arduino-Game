@@ -3,8 +3,7 @@
 #include "GAMES.h"
 #include "Arduino.h"
 
-GAMES::GAMES()
-{
+GAMES::GAMES() {
 
 }
 
