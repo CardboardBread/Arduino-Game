@@ -16,13 +16,13 @@ void TIME::flashLED()
       ledChoice = A5;
     }
     if (actionType = 1) {
-      if (millisInt > 500) {
+      if ((millisInt > 500) == true) {
         digitalWrite(port, HIGH);  
       }
-      else if (millisInt > 700) {
+      else if ((millisInt / 700) == true) {
         digitalWrite(port, LOW);
       }
     } else if (actionType = 2) {
-      
+      digitalWrite(port, HIGH);
     }
 }
