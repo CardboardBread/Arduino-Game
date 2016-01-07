@@ -3,13 +3,13 @@
 
 class TIME
 {
-  public:
-    TIME();
-    void flashLED();
-    int ledChoice;
-    int port;
-    int actionType;
-    int millisInt =  (int) millis;
+	public:
+		TIME();
+		void flashLED();
+		int ledChoice;
+		int port;
+		int actionType;
+		int millisInt =  (int) millis;
 };
 
 #endif
