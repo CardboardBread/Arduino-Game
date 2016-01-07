@@ -16,7 +16,7 @@ void DATA:: highCheck (int currentScore, int readAddress) {
 		EEPROM.update(readAddress, byte(currentScore));
 		Serial.println("Player Score written to save data.");
 	} else {
-		Serial.println("The player's score is less than the High Score!");
+		Serial.println("The player's score is less than the High Score.");
 	}
 	
 }

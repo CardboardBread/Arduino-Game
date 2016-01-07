@@ -71,33 +71,39 @@ void loop() {
 	
     x++;
 
-  if (millis() == (1000 || 2000 || 3000 || 4000 || 5000 || 6000 || 7000 || 8000 || 9000 || 10000 || 11000)) {
 	if (time > (limit)) {
-		digitalWrite(A3, LOW);
-		digitalWrite(A4, LOW);
-		digitalWrite(A5, LOW);
+		if ((digitalRead(A3) != LOW) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW))
+			digitalWrite(A3, LOW);
+			digitalWrite(A4, LOW);
+			digitalWrite(A5, LOW);
+		}
 	} else if ((time > (limit / 2)) && (time < ((3 *limit) / 4))) {
-		digitalWrite(A3, HIGH);
-		digitalWrite(A4, LOW);
-		digitalWrite(A5, LOW);
-		Serial.println("above half, less than 3/4");
+		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW))
+			digitalWrite(A3, HIGH);
+			digitalWrite(A4, LOW);
+			digitalWrite(A5, LOW);
+		}
 	} else if ((time > (limit / 4)) && (time < (limit / 2))) {
-		digitalWrite(A3, HIGH);
-		digitalWrite(A4, HIGH);
-		digitalWrite(A5, LOW);
-		Serial.println("above quarter, less than half");
+		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != LOW))
+			digitalWrite(A3, HIGH);
+			digitalWrite(A4, HIGH);
+			digitalWrite(A5, LOW);
+		}
 	} else if (time < (limit / 4)) {
-		digitalWrite(A3, HIGH);
-		digitalWrite(A4, HIGH);
-		digitalWrite(A5, HIGH);
+		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != HIGH)) {
+			digitalWrite(A3, HIGH);
+			digitalWrite(A4, HIGH);
+			digitalWrite(A5, HIGH);
+		}
 	}
-  }
 	
     if (time > limit) {
 		data.highCheck(playerScore, saveLocation);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
-    delay(500);
+		delay(500);
 		exit(0);
     }
 }
+
+
