@@ -20,7 +20,7 @@ const int enable2   	= 9;
 int buttons[4]      	= {A1, A2, 12, 13};
 int Led, a, x        	= 0;
 int tilecolumn[4]    	= {1,2, 3, 4};
-long unsigned limit 	= 60000;
+long unsigned limit 	= 12000;
 unsigned long time;
 int playerScore;
 int saveLocation = 1;
@@ -56,7 +56,7 @@ void shifter(int tiles[4]) {
 }
 
 void loop() {
-	
+	time = millis();
 	if (x >= 4) {
 		x = 0;
 	}
@@ -70,29 +70,34 @@ void loop() {
     }
 	
     x++;
-	
-	if time > ((2 * limit) / 3)) {
-		timeleft.flashLED(1, 1);
-		timeleft.flashLED(2, 3);
-		timeleft.flashLED(3, 3);
-	} else if (time > (limit / 2)) {
-		timeleft.flashLED(1, 2);
-		timeleft.flashLED(2, 1);
-		timeleft.flashLED(3, 3);
-	} else if (time > (limit / 4)) {
-		timeleft.flashLED(1, 2);
-		timeleft.flashLED(2, 2);
-		timeleft.flashLED(3, 1);
-	} else {
-		timeleft.flashLED(1, 2);
-		timeleft.flashLED(2, 2);
-		timeleft.flashLED(3, 2);
+
+  if (millis() == (1000 || 2000 || 3000 || 4000 || 5000 || 6000 || 7000 || 8000 || 9000 || 10000 || 11000)) {
+	if (time > (limit)) {
+		digitalWrite(A3, LOW);
+		digitalWrite(A4, LOW);
+		digitalWrite(A5, LOW);
+	} else if ((time > (limit / 2)) && (time < ((3 *limit) / 4))) {
+		digitalWrite(A3, HIGH);
+		digitalWrite(A4, LOW);
+		digitalWrite(A5, LOW);
+		Serial.println("above half, less than 3/4");
+	} else if ((time > (limit / 4)) && (time < (limit / 2))) {
+		digitalWrite(A3, HIGH);
+		digitalWrite(A4, HIGH);
+		digitalWrite(A5, LOW);
+		Serial.println("above quarter, less than half");
+	} else if (time < (limit / 4)) {
+		digitalWrite(A3, HIGH);
+		digitalWrite(A4, HIGH);
+		digitalWrite(A5, HIGH);
 	}
+  }
 	
     if (time > limit) {
 		data.highCheck(playerScore, saveLocation);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
+    delay(500);
 		exit(0);
     }
 }
