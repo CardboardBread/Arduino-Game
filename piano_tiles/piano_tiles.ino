@@ -30,27 +30,27 @@ TIME timeleft       	= TIME();
 DATA Data 				= DATA();
 
 void setup() {
-  Serial.begin(9600);
-  
-  for (int x = 0; x < 10; x++) {
-    pinMode(x, OUTPUT);
-  }
+	Serial.begin(9600);
+	
+	for (int x = 0; x < 10; x++) {
+		pinMode(x, OUTPUT);
+	}
 
-  for (auto button : buttons) {
-    pinMode(buttons[button], INPUT);
-  }
-  
-  randomSeed(analogRead(A5));
-  pinMode(A3, OUTPUT);
-  pinMode(A4, OUTPUT);
-  pinMode(A5, OUTPUT);
+	for (auto button : buttons) {
+		pinMode(buttons[button], INPUT);
+	}
+	
+	randomSeed(analogRead(A5));
+	pinMode(A3, OUTPUT);
+	pinMode(A4, OUTPUT);
+	pinMode(A5, OUTPUT);
 }
 
 void shifter(int tiles[4]) {
-  tiles[3] = tiles[2];
-  tiles[2] = tiles[1];
-  tiles[1] = tiles[0];
-  tiles[0] = random(1, 5);
+	tiles[3] = tiles[2];
+	tiles[2] = tiles[1];
+	tiles[1] = tiles[0];
+	tiles[0] = random(1, 5);
 }
 
 void loop() {
