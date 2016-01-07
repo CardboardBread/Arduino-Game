@@ -6,8 +6,8 @@ class DATA {
 	public:
 		DATA();
    
-		void highCheck (int currentScore, int readAddress);
-		int loadHigh ();
+		void highCheck (int currentScore, int readAddress, int currentHigh);
+		int loadHigh (int readAddress);
 };
 
 #endif

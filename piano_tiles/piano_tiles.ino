@@ -24,6 +24,7 @@ long unsigned limit 	= 12000;
 unsigned long time;
 int playerScore;
 int saveLocation = 1;
+int currentHighScore = 0;
 
 LEDs ledarray 			= LEDs();
 Buttonscls pushbutton	= Buttonscls();
@@ -46,6 +47,8 @@ void setup() {
 	pinMode(A3, OUTPUT);
 	pinMode(A4, OUTPUT);
 	pinMode(A5, OUTPUT);
+	
+	currentHighScore = data.loadHigh(1);
 }
 
 void shifter(int tiles[4]) {
@@ -72,19 +75,19 @@ void loop() {
     x++;
 
 	if (time > (limit)) {
-		if ((digitalRead(A3) != LOW) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW))
+		if ((digitalRead(A3) != LOW) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW)) {
 			digitalWrite(A3, LOW);
 			digitalWrite(A4, LOW);
 			digitalWrite(A5, LOW);
 		}
 	} else if ((time > (limit / 2)) && (time < ((3 *limit) / 4))) {
-		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW))
+		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW)) {
 			digitalWrite(A3, HIGH);
 			digitalWrite(A4, LOW);
 			digitalWrite(A5, LOW);
 		}
 	} else if ((time > (limit / 4)) && (time < (limit / 2))) {
-		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != LOW))
+		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != LOW)) {
 			digitalWrite(A3, HIGH);
 			digitalWrite(A4, HIGH);
 			digitalWrite(A5, LOW);
@@ -98,7 +101,7 @@ void loop() {
 	}
 	
     if (time > limit) {
-		data.highCheck(playerScore, saveLocation);
+		data.highCheck(playerScore, saveLocation, currentHighScore);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
 		delay(500);

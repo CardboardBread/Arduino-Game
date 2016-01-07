@@ -7,8 +7,8 @@ DATA::DATA()
 	
 }
 
-void DATA:: highCheck (int currentScore, int readAddress) {
-	byte highScore = EEPROM.read(readAddress);
+void DATA:: highCheck (int currentScore, int readAddress, int currentHigh) {
+	int highScore = currentHigh;
 	
 	if (currentScore > int(highScore)) {
 		Serial.println("Player Score is higher than current High Score.");
@@ -19,4 +19,8 @@ void DATA:: highCheck (int currentScore, int readAddress) {
 		Serial.println("The player's score is less than the High Score.");
 	}
 	
+}
+
+int DATA:: loadHigh (int readAddress) {
+	return int(EEPROM.read(readAddress));
 }
