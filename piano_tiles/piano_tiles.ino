@@ -71,7 +71,11 @@ void loop() {
 	
     x++;
 	
-	if (time = (limit / 2)) {
+	if time > ((2 * limit) / 3)) {
+		timeleft.flashLED(1, 1);
+		timeleft.flashLED(2, 3);
+		timeleft.flashLED(3, 3);
+	} else if (time > (limit / 2)) {
 		timeleft.flashLED(1, 2);
 		timeleft.flashLED(2, 1);
 		timeleft.flashLED(3, 3);
@@ -79,10 +83,10 @@ void loop() {
 		timeleft.flashLED(1, 2);
 		timeleft.flashLED(2, 2);
 		timeleft.flashLED(3, 1);
-	} else if (time > ((2 * limit) / 3)) {
-		timeleft.flashLED(1, 1);
-		timeleft.flashLED(2, 3);
-		timeleft.flashLED(3, 3);
+	} else {
+		timeleft.flashLED(1, 2);
+		timeleft.flashLED(2, 2);
+		timeleft.flashLED(3, 2);
 	}
 	
     if (time > limit) {
