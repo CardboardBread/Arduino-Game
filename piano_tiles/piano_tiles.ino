@@ -4,6 +4,7 @@
 #include "GAMES.h"
 #include "TIME.h"
 #include "DATA.h"
+#include "EEPROM.h"
 
 //the goody two shoe program
 const int channelA1 	= 2;
@@ -22,12 +23,13 @@ int tilecolumn[4]    	= {1,2, 3, 4};
 long unsigned limit 	= 60000;
 unsigned long time;
 int playerScore;
+int saveLocation = 1;
 
 LEDs ledarray 			= LEDs();
 Buttonscls pushbutton	= Buttonscls();
 GAMES pianotiles 		= GAMES();
 TIME timeleft       	= TIME();
-DATA Data 				= DATA();
+DATA data 				= DATA();
 
 void setup() {
 	Serial.begin(9600);
@@ -69,8 +71,22 @@ void loop() {
 	
     x++;
 	
+	if (time = (limit / 2)) {
+		timeleft.flashLED(1, 2);
+		timeleft.flashLED(2, 1);
+		timeleft.flashLED(3, 3);
+	} else if (time > (limit / 4)) {
+		timeleft.flashLED(1, 2);
+		timeleft.flashLED(2, 2);
+		timeleft.flashLED(3, 1);
+	} else if (time > ((2 * limit) / 3)) {
+		timeleft.flashLED(1, 1);
+		timeleft.flashLED(2, 3);
+		timeleft.flashLED(3, 3);
+	}
+	
     if (time > limit) {
-		Data.highCheck(playerScore, 1);
+		data.highCheck(playerScore, saveLocation);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
 		exit(0);

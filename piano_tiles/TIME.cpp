@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "TIME.h"
 
 TIME::TIME()
@@ -6,23 +5,26 @@ TIME::TIME()
   
 }
 
-void TIME::flashLED()
+void TIME::flashLED(int ledChoice, int actionType)
 {
-    if (port = 1) {
-		ledChoice = A3;  
-    } else if (port = 2) {
-		ledChoice = A4;
-    } else if (port = 3) {
-		ledChoice = A5;
-    }
-    if (actionType = 1) {
-		if ((millisInt > 500) == true) {
-			digitalWrite(port, HIGH);  
-		}
-		else if ((millisInt / 700) == true) {
+	int port;
+	if (ledChoice = 1) {
+		port = A3;
+	} else if (ledChoice = 2) {
+		port = A4;
+	} else if (ledChoice = 3) {
+		port = A5;
+	}
+	
+	if (actionType = 1) {
+		if ((timeElapsed / 500) == true) {
+			digitalWrite(port, HIGH);
+		} else if ((timeElapsed / 700) == true) {
 			digitalWrite(port, LOW);
 		}
-    } else if (actionType = 2) {
+	} else if (actionType = 2) {
 		digitalWrite(port, HIGH);
-    }
+	} else if (actionType = 3) {
+		digitalWrite(port, LOW);
+	}
 }
