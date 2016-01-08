@@ -47,8 +47,12 @@ void setup() {
 	pinMode(A3, OUTPUT);
 	pinMode(A4, OUTPUT);
 	pinMode(A5, OUTPUT);
+
+  //EEPROM.update(1, 2);
 	
 	currentHighScore = data.loadHigh(1);
+	Serial.println("The high score is:");
+  Serial.println(currentHighScore);
 }
 
 void shifter(int tiles[4]) {
@@ -60,9 +64,40 @@ void shifter(int tiles[4]) {
 
 void loop() {
 	time = millis();
+	
+	noInterrupts();
 	if (x >= 4) {
 		x = 0;
+		
+		if (time < (limit) && (time > ((3 *limit) / 4))) {
+			if ((digitalRead(A3) != LOW) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
+				digitalWrite(A3, LOW);
+				digitalWrite(A4, LOW);
+				digitalWrite(A5, LOW);
+			}
+		} else if ((time > (limit / 2)) && (time < ((3 *limit) / 4))) {
+			if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
+				digitalWrite(A3, HIGH);
+				digitalWrite(A4, LOW);
+				digitalWrite(A5, LOW);
+			}
+		} else if ((time > (limit / 4)) && (time < (limit / 2))) {
+			if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != LOW)) {
+				digitalWrite(A3, HIGH);
+				digitalWrite(A4, HIGH);
+				digitalWrite(A5, LOW);
+			}
+		} else if (time < (limit / 4)) {
+			if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != HIGH)) {
+				digitalWrite(A3, HIGH);
+				digitalWrite(A4, HIGH);
+				digitalWrite(A5, HIGH);
+			}
+		} else {
+		//Stuff goes here
+		}
 	}
+	interrupts();
 	
     pianotiles.tiler(tilecolumn);
     a = pushbutton.button_ON(x,tilecolumn);
@@ -70,41 +105,26 @@ void loop() {
     if (a + 1 == tilecolumn[3]) {
 		Serial.println(a);
 		shifter(tilecolumn);
+		playerScore = playerScore + 1;
+		Serial.println("Point Awarded.");
     }
 	
     x++;
 
-	if (time > (limit)) {
-		if ((digitalRead(A3) != LOW) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW)) {
-			digitalWrite(A3, LOW);
-			digitalWrite(A4, LOW);
-			digitalWrite(A5, LOW);
-		}
-	} else if ((time > (limit / 2)) && (time < ((3 *limit) / 4))) {
-		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != LOW) && (digitalRead(A5) != LOW)) {
-			digitalWrite(A3, HIGH);
-			digitalWrite(A4, LOW);
-			digitalWrite(A5, LOW);
-		}
-	} else if ((time > (limit / 4)) && (time < (limit / 2))) {
-		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != LOW)) {
-			digitalWrite(A3, HIGH);
-			digitalWrite(A4, HIGH);
-			digitalWrite(A5, LOW);
-		}
-	} else if (time < (limit / 4)) {
-		if ((digitalRead(A3) != HIGH) && (digitalRead(A4) != HIGH) && (digitalRead(A5) != HIGH)) {
-			digitalWrite(A3, HIGH);
-			digitalWrite(A4, HIGH);
-			digitalWrite(A5, HIGH);
-		}
-	}
-	
-    if (time > limit) {
+    if (time >= limit) {
 		data.highCheck(playerScore, saveLocation, currentHighScore);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
-		delay(500);
+		delay(100);
+		for (int x = 0; x = (playerScore / 4) + 1; x++) {
+			for (int y = 0; y < playerScore % 4; y++) {
+				ledarray.LED_ON(x, y);
+				delay(100);
+			}
+		}
+		
+		
+		
 		exit(0);
     }
 }
