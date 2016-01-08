@@ -10,13 +10,17 @@ DATA::DATA()
 void DATA:: highCheck (int currentScore, int readAddress, int currentHigh) {
 	
 	if (currentScore > currentHigh) {
-		Serial.println("Player Score is higher than current High Score.");
+		Serial.println("Player Score is higher than current High Score");
 		Serial.println(currentScore);
 		currentHigh = byte(currentScore);
 		EEPROM.update(readAddress, byte(currentScore));
-		Serial.println("Player Score written to save data.");
+		Serial.println("Player Score written to save data");
+	} else if (currentScore = currentHigh) {
+		Serial.println("Player score equal to high");
+		Serial.println(currentScore);
 	} else {
-		Serial.println("The player's score is less than the High Score.");
+		Serial.println("Player score less than high");
+		Serial.println(currentScore);
 	}
 	
 }

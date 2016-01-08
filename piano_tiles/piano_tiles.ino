@@ -2,7 +2,7 @@
 #include "Buttonscls.h"
 #include "LEDs.h"
 #include "GAMES.h"
-#include "TIME.h"
+#include "SCORE.h"
 #include "DATA.h"
 #include "EEPROM.h"
 
@@ -22,14 +22,14 @@ int Led, a, x        	= 0;
 int tilecolumn[4]    	= {1,2, 3, 4};
 long unsigned limit 	= 12000;
 unsigned long time;
-int playerScore;
+int playerScore = 0;
 int saveLocation = 1;
 int currentHighScore = 0;
 
 LEDs ledarray 			= LEDs();
 Buttonscls pushbutton	= Buttonscls();
 GAMES pianotiles 		= GAMES();
-TIME timeleft       	= TIME();
+SCORE score       	= SCORE();
 DATA data 				= DATA();
 
 void setup() {
@@ -43,7 +43,7 @@ void setup() {
 		pinMode(buttons[button], INPUT);
 	}
 	
-	randomSeed(analogRead(A5));
+	randomSeed(analogRead(A0));
 	pinMode(A3, OUTPUT);
 	pinMode(A4, OUTPUT);
 	pinMode(A5, OUTPUT);
@@ -115,13 +115,10 @@ void loop() {
 		data.highCheck(playerScore, saveLocation, currentHighScore);
 		digitalWrite(enable1, HIGH);
 		digitalWrite(enable2, HIGH);
+		delay(500);
+		score.printScore(playerScore);
 		delay(100);
-		for (int x = 0; x = (playerScore / 4) + 1; x++) {
-			for (int y = 0; y < playerScore % 4; y++) {
-				ledarray.LED_ON(x, y);
-				delay(100);
-			}
-		}
+		
 		
 		
 		
