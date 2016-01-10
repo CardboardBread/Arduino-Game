@@ -33,7 +33,7 @@ SCORE score         	= SCORE();
 DATA data 		    		= DATA();
 
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 
   for (int x = 0; x < 10; x++) {
     pinMode(x, OUTPUT);

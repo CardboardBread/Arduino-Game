@@ -10,9 +10,9 @@ const int channelC2 = 8;
 const int enable2   = 9;
 
 int buttons[4] = {A1, A2, 12, 13};
-int Led, a, x = 0;
+int Led, a, x, row = 0;
 int tilecolumn[4] = {2, 3, 4, 1};
-
+boolean rowsetup = false;
 
 
 void setup() {
@@ -29,27 +29,62 @@ void setup() {
 
 }
 void loop() {
-  if (x >= 4) {
-    x = 0;
+  // game setup
+  if (rowsetup == false) {
+    if (x >= 4) {
+      x = 0;
+    }
+    a = button_ON(x);
+
+    switch (a) {
+      case 0:
+        row = 0;
+        break;
+      case 1:
+        row = 1;
+        break;
+      case 2:
+        row = 2;
+        break;
+      case 3:
+        row = 3;
+        break;
+      default:
+        row = 5;
+        break;
+    }
+    if (row < 4) {
+      rowsetup = true;
+    }
+    else {
+      x++;
+    }
   }
+  else{
+//game
+
+
+    if (x >= 4) {
+      x = 0;
+    }
   digitalWrite(enable1, HIGH);
   digitalWrite(enable2, HIGH);
 
   a = button_ON(x);
   if (a + 1 == 1) {
-    LED_ON(1, 0);
+    LED_ON(1, row);
     delay(50);
   }
   else if (a + 1 == 2) {
-    LED_ON(2, 0);
+    LED_ON(2, row);
     delay(50);
   }
   else if (a + 1 == 3) {
-    LED_ON(3, 0);
+    LED_ON(3, row);
     delay(50);
   }
   else if (a + 1 == 4) {
-  LED_ON(4, 0);
+    LED_ON(4, row);
     delay(50);
   }
   else {
@@ -58,7 +93,7 @@ void loop() {
   }
   x++;
 }
-
+}
 
 int button_ON(int x) {
   int buttonstate[4], laststate[4];
