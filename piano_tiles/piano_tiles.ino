@@ -20,11 +20,15 @@ const int enable2   	= 9;
 int buttons[4]      	= {A1, A2, 12, 13};
 int Led, a, x        	= 0;
 int tilecolumn[4]    	= {1, 2, 3, 4};
-unsigned long limit 	= 12000;
-unsigned long time;
-int playerScore = 0;
-int saveLocation = 1;
-int currentHighScore = 0;
+
+unsigned long limit;
+unsigned long starttime, gametime;
+
+int playerScore       = 0;
+int saveLocation      = 1;
+int currentHighScore  = 0;
+
+boolean gamesetup     = false;
 
 LEDs ledarray 			  = LEDs();
 Buttonscls pushbutton	= Buttonscls();
@@ -63,64 +67,100 @@ void shifter(int tiles[4]) {
 }
 
 void loop() {
-  noInterrupts();
-  
-  time = millis();
+  // game setup
+  if (gamesetup == false) {
+    if (x >= 4) {
+      x = 0;
+    }
+    a = pushbutton.button_ON(x);
 
-  if (x >= 4) {
-    x = 0;
-
-    if (time < (limit) && (time > ((3 * limit) / 4))) {
-      if ((digitalRead(A3) != LOW) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
-        digitalWrite(A3, LOW);
-        digitalWrite(A4, LOW);
-        digitalWrite(A5, LOW);
-      }
-    } else if ((time > (limit / 2)) && (time < ((3 * limit) / 4))) {
-      if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
-        digitalWrite(A3, HIGH);
-        digitalWrite(A4, LOW);
-        digitalWrite(A5, LOW);
-      }
-    } else if ((time > (limit / 4)) && (time < (limit / 2))) {
-      if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != LOW)) {
-        digitalWrite(A3, HIGH);
-        digitalWrite(A4, HIGH);
-        digitalWrite(A5, LOW);
-      }
-    } else if (time < (limit / 4)) {
-      if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != HIGH)) {
-        digitalWrite(A3, HIGH);
-        digitalWrite(A4, HIGH);
-        digitalWrite(A5, HIGH);
-      }
-    } else {
-      //Stuff goes here
+    switch (a) {
+      case 1:
+        limit = 10000;
+        break;
+      case 2:
+        limit = 15000;
+        break;
+      case 3:
+        limit = 30000;
+        break;
+      case 4:
+        limit = 45000;
+        break;
+      default :
+        limit = 0;
+        break;
+      
+    }
+    if (limit != 0) {
+      gamesetup = true;
+      starttime = millis();
+    }
+    else {
+      x++;
+      gamesetup = false;
     }
   }
-  interrupts();
 
-  pianotiles.tiler(tilecolumn);
-  a = pushbutton.button_ON(x, tilecolumn);
+  if (gamesetup == true)
+  {
+    //game
 
-  if (a + 1 == tilecolumn[3]) {
-    Serial.println(a);
-    shifter(tilecolumn);
-    playerScore = playerScore + 1;
-    Serial.println("Point Awarded.");
-  }
+    gametime = millis() - starttime;
 
-  x++;
+    if (x >= 4) {
+      x = 0;
 
-  if (time >= limit) {
-    Serial.println(time);
-    data.highCheck(playerScore, saveLocation, currentHighScore);
-    digitalWrite(enable1, HIGH);
-    digitalWrite(enable2, HIGH);
-    delay(500);
-    score.printScore(playerScore);
-    delay(100);
-    exit(0);
+      if (gametime < (limit) && (gametime > ((3 * limit) / 4))) {
+        if ((digitalRead(A3) != LOW) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
+          digitalWrite(A3, LOW);
+          digitalWrite(A4, LOW);
+          digitalWrite(A5, LOW);
+        }
+      } else if ((gametime > (limit / 2)) && (gametime < ((3 * limit) / 4))) {
+        if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
+          digitalWrite(A3, HIGH);
+          digitalWrite(A4, LOW);
+          digitalWrite(A5, LOW);
+        }
+      } else if ((gametime > (limit / 4)) && (gametime < (limit / 2))) {
+        if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != LOW)) {
+          digitalWrite(A3, HIGH);
+          digitalWrite(A4, HIGH);
+          digitalWrite(A5, LOW);
+        }
+      } else if (gametime < (limit / 4)) {
+        if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != HIGH)) {
+          digitalWrite(A3, HIGH);
+          digitalWrite(A4, HIGH);
+          digitalWrite(A5, HIGH);
+        }
+      } else {
+        //Stuff goes here
+      }
+    }
+
+    pianotiles.tiler(tilecolumn);
+    a = pushbutton.button_ON(x);
+
+    if (a == tilecolumn[3]) {
+      Serial.println(a);
+      shifter(tilecolumn);
+      playerScore = playerScore + 1;
+      Serial.println("Point Awarded.");
+    }
+
+    x++;
+    if (gametime >= limit) {
+      Serial.println(gametime);
+      data.highCheck(playerScore, saveLocation, currentHighScore);
+      digitalWrite(enable1, HIGH);
+      digitalWrite(enable2, HIGH);
+      delay(500);
+      score.printScore(playerScore);
+      delay(100);
+      exit(0);
+    }
   }
 }
 

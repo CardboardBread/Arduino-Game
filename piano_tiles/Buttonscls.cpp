@@ -7,7 +7,7 @@ Buttonscls::Buttonscls() {
 
 ///////////////////////////////////////////////
 
-int Buttonscls::button_ON(int x, int tilecolumn[4]) {
+int Buttonscls::button_ON(int x) {
   int buttonstate[4] = {0,0,0,0};
   delay(1);
   buttonstate[x] = digitalRead(buttons[x]);
@@ -24,7 +24,7 @@ int Buttonscls::button_ON(int x, int tilecolumn[4]) {
         z = 0;
       }
     }
-    return x;
+    return x + 1;
   }
   else {
     return 7;
