@@ -15,7 +15,7 @@ void DATA:: highCheck (int currentScore, int readAddress, int currentHigh) {
 		currentHigh = byte(currentScore);
 		EEPROM.update(readAddress, byte(currentScore));
 		Serial.println("Player Score written to save data");
-	} else if (currentScore = currentHigh) {
+	} else if (currentScore == currentHigh) {
 		Serial.println("Player score equal to high");
 		Serial.println(currentScore);
 	} else {

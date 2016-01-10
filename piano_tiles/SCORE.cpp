@@ -12,7 +12,7 @@ void SCORE:: printScore (int score)
 		delay(250);
 		digitalWrite(A4, LOW);
 		delay(250);
-		//Serial.println(x);
+		Serial.println(x);
 	}
 	delay(150);
 	for (int x = 0; x < score - (round(score / 10) * 10); x++) {
@@ -20,6 +20,6 @@ void SCORE:: printScore (int score)
 		delay(250);
 		digitalWrite(A5, LOW);
 		delay(250);
-		//Serial.println(x);
+		Serial.println(x);
 	}
 }
