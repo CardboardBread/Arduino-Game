@@ -5,6 +5,7 @@
 #include "SCORE.h"
 #include "DATA.h"
 #include "EEPROM.h"
+#include "pitches.h"
 
 //the goody two shoe program
 const int channelA1 	= 2;
@@ -27,6 +28,7 @@ unsigned long starttime, gametime;
 int playerScore       = 0;
 int saveLocation      = 1;
 int currentHighScore  = 0;
+int soundPin 		  = 11;
 
 boolean gamesetup     = false;
 
@@ -116,24 +118,28 @@ void loop() {
           digitalWrite(A3, LOW);
           digitalWrite(A4, LOW);
           digitalWrite(A5, LOW);
+		  tone(soundPin, NOTE_B6, 100);
         }
       } else if ((gametime > (limit / 2)) && (gametime < ((3 * limit) / 4))) {
         if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
           digitalWrite(A3, HIGH);
           digitalWrite(A4, LOW);
           digitalWrite(A5, LOW);
+		  tone(soundPin, NOTE_B6, 100);
         }
       } else if ((gametime > (limit / 4)) && (gametime < (limit / 2))) {
         if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != LOW)) {
           digitalWrite(A3, HIGH);
           digitalWrite(A4, HIGH);
           digitalWrite(A5, LOW);
+		  tone(soundPin, NOTE_B6, 100);
         }
       } else if (gametime < (limit / 4)) {
         if ((digitalRead(A3) != HIGH) || (digitalRead(A4) != HIGH) || (digitalRead(A5) != HIGH)) {
           digitalWrite(A3, HIGH);
           digitalWrite(A4, HIGH);
           digitalWrite(A5, HIGH);
+		  tone(soundPin, NOTE_B6, 100);
         }
       } else {
         //Stuff goes here
@@ -147,6 +153,8 @@ void loop() {
       Serial.println(a);
       shifter(tilecolumn);
       playerScore = playerScore + 1;
+	  tone(soundPin, NOTE_A5, 100);
+	  tone(soundPin, NOTE_D6, 100);
       Serial.println("Point Awarded.");
     }
 
