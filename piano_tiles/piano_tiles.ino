@@ -113,6 +113,21 @@ void loop() {
     if (x >= 4) {
       x = 0;
 
+      switch(x) {
+        case 1:
+          tone(soundPin, NOTE_G6, 150);
+          break;
+        case 2:
+          tone(soundPin, NOTE_F6, 150);
+          break;
+        case 3:
+          tone(soundPin, NOTE_E6, 150);
+          break;
+        case 4:
+          tone(soundPin, NOTE_D6, 150);
+          break;
+      }
+      
       if (gametime < (limit) && (gametime > ((3 * limit) / 4))) {
         if ((digitalRead(A3) != LOW) || (digitalRead(A4) != LOW) || (digitalRead(A5) != LOW)) {
           digitalWrite(A3, LOW);
